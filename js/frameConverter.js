@@ -7,6 +7,7 @@ function frameConverter(video, canvas, dispatcher) {
   this.height = canvas.height;
   this.screenshot = document.getElementById("screenshot");
   this.dispatcher = dispatcher;
+  this.dispatcherCopy = dispatcher;
 
   // Create the frame-buffer canvas
   var newCanvas = document.createElement("canvas");
@@ -32,20 +33,21 @@ function frameConverter(video, canvas, dispatcher) {
 
   // Rendering call-back
   this.render = function() {
+
       if (this.video.paused || this.video.ended) {
-        return;
+        this.dispatcher = this.dispatcherCopy;
       }
       this.renderFrame();
+
       var self = this;
-      
       var currentSecond = Math.floor(this.video.currentTime);
-      if( self.dispatcher[currentSecond] != undefined ){
+      if(self.dispatcher[currentSecond] != undefined){
         var obj = self.dispatcher[currentSecond];
         sched.drawRipple(obj.x, obj.y, obj.r, obj.f);
+        editor.gotoLine(obj.line);
+
         self.dispatcher[currentSecond] = undefined;
       }
-
-      console.log(currentSecond);
 
       setTimeout(function () {
           self.render();

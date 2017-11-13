@@ -23,7 +23,17 @@
           <div id="canvasWrapper">
             <canvas id="drawableCanvas" width="640" height="380"></canvas>
           </div>
-          <div id="editor"></div>
+<div id="editor">1 -> 2
+150,150,50,5
+
+3 -> 4
+150,150,25,5
+
+5 -> 6
+250,250,100,3
+
+15 -> 16
+250,150,150,3</div>
     </div>
   </div>
   </div>
@@ -42,10 +52,10 @@
     video = document.getElementById("video");
     canvas = document.getElementById("canvas");
     var dispatcher = [];
-    dispatcher[1] = {x: 150, y: 150, r: 50, f: 5};
-    dispatcher[3] = {x: 150, y: 150, r: 25, f: 5};
-    dispatcher[5] = {x: 250, y: 250, r: 100, f: 3};
-    dispatcher[15] = {x: 350, y: 150, r: 150, f: 3};
+    dispatcher[1] = {x: 150, y: 150, r: 50, f: 5, line: 1};
+    dispatcher[3] = {x: 150, y: 150, r: 25, f: 5, line: 4};
+    dispatcher[5] = {x: 250, y: 250, r: 100, f: 3, line: 7};
+    dispatcher[15] = {x: 350, y: 150, r: 150, f: 3, line: 10};
     fc = new frameConverter(video, canvas, dispatcher);
   }
 
