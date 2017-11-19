@@ -1,10 +1,37 @@
-function scheduler(drawCanvasId) {
+function scheduler(canvas, dispatcher, editor) {
 
-  var canvas = document.getElementById(drawCanvasId);
   this.ctx = canvas.getContext("2d");
-
+  this.dispatcher = dispatcher;
+  this.dispatcherCopy = dispatcher;
+  
+  this.video = document.getElementById("video");
   this.height = canvas.height;
   this.width = canvas.width;
+
+  var self = this;
+
+  this.video.addEventListener("play", function() {
+      self.refresh();
+    }, false);
+
+  this.refresh = function(f) {
+    if (this.video.paused || this.video.ended) {
+      this.dispatcher = this.dispatcherCopy;
+    }
+
+    var currentSecond = Math.floor(this.video.currentTime);
+    if(currentSecond != undefined && self.dispatcher[currentSecond] != undefined){
+      var obj = self.dispatcher[currentSecond];
+      self.drawRipple(obj.x, obj.y, obj.r, obj.f);
+      editor.gotoLine(obj.line);
+
+      self.dispatcher[currentSecond] = undefined;
+    }
+
+    setTimeout(function () {
+        self.refresh();
+      }, 50);
+  }
 
   this.drawRipple = function(x, y, power, step, canvas) {
     var self = this;
@@ -51,7 +78,6 @@ function scheduler(drawCanvasId) {
         dispatcher[i] = { radius : 50, frequency : 5 };
       }
 
-      console.log(dispatcher);
       editor.setValue(bfile, 1);
       editor.gotoLine(2);
     }

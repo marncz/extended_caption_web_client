@@ -1,32 +1,24 @@
-canvas {
-    border: 1px solid #ddd;
-}
-
-.wrapper {
-  padding-left:3%;
-}
-
 #editor {
-  width: 640px;
+  width: 400px;
   height: 380px;
-  margin-top: 20px;
-}
-
-video {
-    width: 640px;
-    height: 400px;
-    display: flex;
 }
 
 #container{
-  position:relative;
-  margin-top:20px;
+  position: relative;
+  padding-top: 20px;
 }
 
-#drawableCanvas {
+#video-container{
+  position: relative;
+  margin-top: 20px;
+}
+
+#draw-canvas {
+  z-index: 2;
+  position: absolute;
+}
+
+#video {
+  position: absolute;
   z-index: 1;
-}
-
-#canvas {
-  position:absolute; z-index: -1;
 }

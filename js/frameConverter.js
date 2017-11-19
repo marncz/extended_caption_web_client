@@ -37,7 +37,6 @@ function frameConverter(video, canvas, dispatcher) {
       if (this.video.paused || this.video.ended) {
         this.dispatcher = this.dispatcherCopy;
       }
-      this.renderFrame();
 
       var self = this;
       var currentSecond = Math.floor(this.video.currentTime);
@@ -45,7 +44,6 @@ function frameConverter(video, canvas, dispatcher) {
         var obj = self.dispatcher[currentSecond];
         sched.drawRipple(obj.x, obj.y, obj.r, obj.f);
         editor.gotoLine(obj.line);
-
         self.dispatcher[currentSecond] = undefined;
       }
 
