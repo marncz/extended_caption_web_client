@@ -3,10 +3,13 @@ function scheduler(canvas, dispatcher, editor) {
   this.ctx = canvas.getContext("2d");
   this.dispatcher = dispatcher;
   this.dispatcherCopy = dispatcher;
-  
+
   this.video = document.getElementById("video");
   this.height = canvas.height;
   this.width = canvas.width;
+
+  this.previousSecond = 0;
+  this.currentSecond = 0;
 
   var self = this;
 
@@ -15,26 +18,37 @@ function scheduler(canvas, dispatcher, editor) {
     }, false);
 
   this.refresh = function(f) {
-    if (this.video.paused || this.video.ended) {
+    this.currentSecond = Math.floor(this.video.currentTime);
+
+    /* Video rewinded event */
+    if(this.previousSecond > this.currentSecond) {
+      this.previousSecond = this.currentSecond;
+    }
+
+    if(this.video.paused || this.video.ended) {
       this.dispatcher = this.dispatcherCopy;
     }
 
-    var currentSecond = Math.floor(this.video.currentTime);
-    if(currentSecond != undefined && self.dispatcher[currentSecond] != undefined){
-      var obj = self.dispatcher[currentSecond];
+    if(this.currentSecond != this.previousSecond && self.dispatcher[this.currentSecond]){
+      var obj = self.dispatcher[this.currentSecond];
       self.drawRipple(obj.x, obj.y, obj.r, obj.f);
       editor.gotoLine(obj.line);
+      editor.selection.selectLine();
 
-      self.dispatcher[currentSecond] = undefined;
+      this.previousSecond = this.currentSecond;
     }
+
 
     setTimeout(function () {
         self.refresh();
       }, 50);
   }
 
-  this.drawRipple = function(x, y, power, step, canvas) {
+  this.drawRipple = function(percX, percY, power, step) {
     var self = this;
+    var x = Math.ceil(self.width * (percX / 100));
+    var y = Math.ceil(self.height * (percY / 100));
+
     for(var i = 1; i <= power; i++){
       (function(i){
           setTimeout(function(){
@@ -53,7 +67,6 @@ function scheduler(canvas, dispatcher, editor) {
               self.ctx.clearRect(0, 0, self.width, self.height);
             }
           }, 20 * i);
-
       }(i));
     }
   }

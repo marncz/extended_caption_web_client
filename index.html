@@ -7,38 +7,42 @@
 <script src="js/scheduler.js"></script>
 
 <body>
-  <div class="row wrapper">
+  <div class="row" style="background-color:green;">
       <div class="col-xs-1"></div>
-      <div class="col-md-12">Extended Captions Logo</div>
+      <div class="col-md-6"><h1>Extended Captions</h1></div>
+      <div class="col-md-4"><br><br><font><a>blog</a> | <a>github</a> | <a>contact me</a></font></div>
   </div>
-  <div class="row wrapper">
+  <div class="row" style="background-color:red;">
     <div class="col-xs-1"></div>
     <div class="col-md-6">
           <div id="video-container">
-            <video id="video" width="640" height="480" controls>
+            <video id="video" width="640" height="423" controls>
               <source src="media/video-long.mp4" type="video/mp4">
             </video>
             <canvas id="draw-canvas"></canvas>
           </div>
     </div>
-    <div class="col-md-4" id="container">
+    <div class="col-md-3" id="container">
 <div id="editor">1 -> 2
-150,150,50,5
+0,0,50,5
 
 3 -> 4
-150,150,25,5
+10,10,25,5
 
 5 -> 6
-250,250,100,3
+20,20,100,3
 
 8 -> 9
-50,50,80,5
+30,30,80,5
 
 15 -> 16
-250,150,150,3
-</div>
+40,40,150,3</div>
     </div>
   </div>
+  <div class="row" style="background-color:yellow;">
+   <div class="col-xs-1"></div>
+   <div class="col-md-6"><h2>The idea</h2></div>
+   <div class="col-md-3"><h2>Share</h2></div>
   </div>
 </body>
 <script>
@@ -54,7 +58,7 @@
     video.addEventListener( "loadedmetadata", function (e) {
       var width = this.videoWidth,
           height = this.videoHeight,
-          margin_top = (this.offsetHeight- height) / 2;
+          margin_top = (this.offsetHeight - height) / 2;
 
           /* Apply sizes and margins based on the actual video size */
           $("#draw-canvas").prop('width', width);
@@ -63,11 +67,11 @@
           $("#container").css("margin-top", margin_top + "px");
 
           var dispatcher = [];
-          dispatcher[1] = {x: 150, y: 150, r: 50, f: 5, line: 1};
-          dispatcher[3] = {x: 150, y: 150, r: 25, f: 5, line: 4};
-          dispatcher[5] = {x: 250, y: 250, r: 100, f: 3, line: 7};
-          dispatcher[8] = {x: 50, y: 50, r: 80, f: 5, line: 10};
-          dispatcher[15] = {x: 350, y: 150, r: 150, f: 3, line: 13};
+          dispatcher[1] = {x: 0, y: 0, r: 50, f: 5, line: 1};
+          dispatcher[3] = {x: 10, y: 10, r: 25, f: 5, line: 4};
+          dispatcher[5] = {x: 20, y: 20, r: 100, f: 3, line: 7};
+          dispatcher[8] = {x: 30, y: 30, r: 80, f: 5, line: 10};
+          dispatcher[15] = {x: 40, y: 40, r: 150, f: 3, line: 13};
 
           /* Intialize scheduler */
           var canvas = document.getElementById('draw-canvas');
