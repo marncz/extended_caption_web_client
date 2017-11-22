@@ -224,7 +224,8 @@
         editor.setTheme("ace/theme/cobalt");
         editor.setReadOnly(true);
         editor.setFontSize(17);
-
+        editor.$blockScrolling = Infinity
+        
         /* frameConverter initialization */
         var video = document.getElementById("video");
         video.addEventListener( "loadedmetadata", function (e) {
